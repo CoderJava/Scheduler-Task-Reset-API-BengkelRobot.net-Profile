@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Consumer;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -92,7 +91,7 @@ public class ScheduledTasks {
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        logger.error("Cron Task :: Error - Delete profile error {}", e);
+                        logger.error("Cron Task :: Error - Delete profile error - ", e);
                     }
                 });
 
