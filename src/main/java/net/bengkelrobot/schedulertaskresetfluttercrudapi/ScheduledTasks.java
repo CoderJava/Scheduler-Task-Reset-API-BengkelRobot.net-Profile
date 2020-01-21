@@ -22,6 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 @Component
 public class ScheduledTasks {
@@ -60,6 +61,7 @@ public class ScheduledTasks {
     public void scheduleTaskWithCronExpression() {
         logger.info("Cron Task :: Execution Time - {}",
                 dateTimeFormatter.format(LocalDateTime.now()));
+        ResponseBody body = null;
         try {
             final String baseUrl = "http://api.bengkelrobot.net:8001/api";
             Request request = new Request.Builder()
@@ -70,7 +72,8 @@ public class ScheduledTasks {
             Call call = client.newCall(request);
             Response responseAllProfile = call.execute();
             if (responseAllProfile.code() == 200) {
-                String strResponseBody = responseAllProfile.body().string();
+                body = responseAllProfile.body();
+                String strResponseBody = body.string();
                 Gson gson = new GsonBuilder().create();
                 List<Profile> listProfiles = gson.fromJson(strResponseBody,
                         new TypeToken<List<Profile>>() {
@@ -114,6 +117,10 @@ public class ScheduledTasks {
         } catch (IOException e) {
             e.printStackTrace();
             logger.error("Cron Task :: Error - ", e);
+        } finally {
+            if (body != null) {
+                body.close();
+            }
         }
     }
 }
