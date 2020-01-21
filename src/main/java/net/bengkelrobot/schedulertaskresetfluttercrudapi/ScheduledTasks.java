@@ -57,7 +57,7 @@ public class ScheduledTasks {
 
     // cron = "[seconds] [minutes] [hours] [day of month] [month] [day of week] [year]"
     /*@Scheduled(fixedRate = 1000 * 60, zone = "Asia/Jakarta")*/
-    @Scheduled(cron = "0 0 6 * * ?")
+    @Scheduled(cron = "0 0 10 * * *")
     public void scheduleTaskWithCronExpression() {
         logger.info("Cron Task :: Execution Time - {}",
                 dateTimeFormatter.format(LocalDateTime.now()));
